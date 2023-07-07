@@ -5,8 +5,10 @@ import Layout from '../../Components/Layout'
 
 function SignIn() {
   const context = useContext(ShoppingCartContext)
-
+  
   const [view, setView] = useState('user-info')
+
+ 
 
   const account = localStorage.getItem('account')
   const parsedAccount = JSON.parse(account)
