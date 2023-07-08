@@ -7,10 +7,16 @@ const Navbar = () => {
   const context = useContext(ShoppingCartContext)
   const activeStyle = 'underline underline-offset-4'
 
-  // Sign Out
   const signOut = localStorage.getItem('sign-out')
   const parsedSignOut = JSON.parse(signOut)
   const isUserSignOut = context.signOut || parsedSignOut
+
+  const account = localStorage.getItem('account')
+  const parsedAccount = JSON.parse(account)
+
+  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
+  const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
 
   const handleSignOut = () => {
     const stringifiedSignOut = JSON.stringify(true)
@@ -19,7 +25,7 @@ const Navbar = () => {
   }
 
   const renderView = () => {
-    if (isUserSignOut) {
+    if (hasUserAnAccount && !isUserSignOut) {
       return (
         <li>
           <NavLink
@@ -67,7 +73,7 @@ const Navbar = () => {
     <nav className='flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light'>
       <ul className='flex items-center gap-3'>
         <li className='font-semibold text-lg'>
-          <NavLink to='/'>
+          <NavLink to={`${isUserSignOut ? './sign-in' : '/'}`}>
             Shopi
           </NavLink>
         </li>
