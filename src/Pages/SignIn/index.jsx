@@ -24,6 +24,7 @@ function SignIn() {
       email: formData.get('email'),
       password: formData.get('password')
     }
+    console.log(data)
   }
 
   const renderLogIn = () => {
@@ -60,7 +61,7 @@ function SignIn() {
   }
   const renderCreateUserInfo = () => {
     return (
-      <form ref="form" className='flex flex-col gap-4 w-80'>
+      <form ref={form} className='flex flex-col gap-4 w-80'>
         <div className='flex flex-col gap-1'>
           <label htmlFor="name" className='font-light text-sm'>Enter your name</label>
           <input 
@@ -86,7 +87,7 @@ function SignIn() {
         <div className='flex flex-col gap-1'>
           <label htmlFor="name" className='font-light text-sm'>Enter your password</label>
           <input 
-          type="password" 
+          type="text" 
           id="password" 
           name="password" 
           defaultValue={parsedAccount?.password} 
