@@ -27,20 +27,9 @@ const Navbar = () => {
   const renderView = () => {
     if (hasUserAnAccount && !isUserSignOut) {
       return (
-        <li>
-          <NavLink
-            to="/sign-in"
-            className={({ isActive }) => isActive ? activeStyle : undefined }
-            onClick={() => handleSignOut()}>
-            Sign out
-          </NavLink>
-        </li>
-      )
-    } else {
-      return (
         <>
-          <li className='text-black/60'>
-            teff@platzi.com
+        <li className='text-black/60'>
+            {parsedAccount?.email}
           </li>
           <li>
             <NavLink
@@ -64,7 +53,18 @@ const Navbar = () => {
               Sign out
             </NavLink>
           </li>
-        </>
+          </>
+      )
+    } else {
+      return (
+        <li>
+            <NavLink
+              to='/sign-in'
+              className={({ isActive }) => isActive ? activeStyle : undefined}
+              onClick={() => handleSignOut()}>
+              Sign out
+            </NavLink>
+          </li>
       )
     }
   }
