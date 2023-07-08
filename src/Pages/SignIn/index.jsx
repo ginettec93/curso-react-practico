@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from 'react'
 import { ShoppingCartContext } from '../../Context'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import Layout from '../../Components/Layout'
 
 function SignIn() {
@@ -17,6 +17,13 @@ function SignIn() {
   const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
   const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
 
+  const handleSignIn = () => {
+    const stringifiedSignOut = JSON.stringify(false)
+    localStorage.setItem('sign-out', stringifiedSignOut)
+    context.setSignOut(false)
+    return <Navigate replace to={'/'}/>
+  }
+
   const createAccount = () => {
     const formData = new FormData(form.current) 
     const data = {
@@ -24,7 +31,10 @@ function SignIn() {
       email: formData.get('email'),
       password: formData.get('password')
     }
-    console.log(data)
+    const stringifiedAccount = JSON.stringify(data)
+    localStorage.setItem('account', stringifiedAccount)
+    context.setAccount(data)
+    handleSignIn()
   }
 
   const renderLogIn = () => {
@@ -42,7 +52,8 @@ function SignIn() {
           to="/">
           <button
             className='bg-black disabled:bg-black/40 text-white  w-full rounded-lg py-3 mt-4 mb-2'
-            disabled={!hasUserAnAccount} >
+            disabled={!hasUserAnAccount} 
+            onClick={() => handleSignIn()}>
             Log in
           </button>
         </Link>
